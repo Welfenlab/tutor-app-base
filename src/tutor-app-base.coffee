@@ -15,7 +15,12 @@ config:
 
 class TutorAppBase
   constructor: (@_config) ->
-    i18n.init @_config.translations, 'en', ko
+    #transform translation config into the format that i18next-ko needs
+    translations = {}
+    for l, t of @_config.translations
+      translations[l] = translation: t
+    i18n.init translations, 'en', ko
+
     @page = ko.observable()
     @pageParams = ko.observable {}
     @pageRequiresLogin = ko.observable true
