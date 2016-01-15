@@ -1,6 +1,7 @@
 ko = require 'knockout'
 i18n = require 'i18next-ko'
 pagejs = require 'page'
+_ = require 'lodash'
 
 ###
 config:
@@ -14,16 +15,19 @@ config:
 
 class TutorAppBase
   constructor: (@_config) ->
+    i18n.init @_config.translations, 'en', ko
     @page = ko.observable()
     @pageParams = ko.observable {}
     @pageRequiresLogin = ko.observable true
     @path = ko.observable ''
 
-    i18n.init @_config.translations, 'en', ko
+    @user = ko.observable()
+
+  onload: ->
     @language = ko.observable 'en'
     @language.subscribe (v) -> i18n.setLanguage(v)
-
-    @user = ko.observable()
+    @availableLanguages = _.keys @_config.translations
+    i18n.setLanguage('en')
 
   goto: (path, replace) ->
     mainElement = document.querySelector(@_config.mainElement)?.firstChild
@@ -40,16 +44,16 @@ class TutorAppBase
       @_config.pagejs path
 
 
-  registerPage: (path, options, fn) ->
-    if !fn
-      fn = options
-      options = {}
-
-    @_config.pagejs.page path, (ctx) =>
+  register: (path, options) ->
+    @_config.pagejs path, (ctx) =>
       @path ctx.path
-      @pageParams ctx.params
-      @pageRequiresLogin options.loginRequired isnt false
-      @page options.component
+
+      if typeof options == 'function'
+        options(ctx)
+      else
+        @pageParams ctx.params
+        @pageRequiresLogin options.loginRequired isnt false
+        @page options.component
 
   isActive: (path) -> @path().indexOf(path) == 0
 
