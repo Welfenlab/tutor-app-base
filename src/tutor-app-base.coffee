@@ -17,8 +17,10 @@ class TutorAppBase
   constructor: (@_config) ->
     #transform translation config into the format that i18next-ko needs
     translations = {}
+    @availableLanguages = []
     for l, t of @_config.translations
       translations[l] = translation: t
+      @availableLanguages.push l
     i18n.init translations, 'en', ko
 
     @page = ko.observable()
@@ -34,7 +36,7 @@ class TutorAppBase
     @availableLanguages = _.keys @_config.translations
     i18n.setLanguage('en')
 
-  goto: (path, replace) ->
+  goto: (path, force) ->
     mainElement = document.querySelector(@_config.mainElement)?.firstChild
     if mainElement
       pageComponent = ko.dataFor mainElement
@@ -45,7 +47,7 @@ class TutorAppBase
     path or= ''
     path = "/#{path}" if path.indexOf('/') != 0
 
-    if path isnt @path()
+    if force or path isnt @path()
       @_config.pagejs path
 
 
