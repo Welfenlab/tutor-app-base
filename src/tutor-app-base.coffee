@@ -31,6 +31,7 @@ class TutorAppBase
     @user = ko.observable()
 
   onload: ->
+    pagejs(hashbang: false, click: false, popstate: true) #handlers don't work, we do it on our own below
     @language = ko.observable 'en'
     @language.subscribe (v) -> i18n.setLanguage(v)
     @availableLanguages = _.keys @_config.translations
@@ -48,11 +49,11 @@ class TutorAppBase
     path = "/#{path}" if path.indexOf('/') != 0
 
     if force or path isnt @path()
-      @_config.pagejs path
+      pagejs path
 
 
   register: (path, options) ->
-    @_config.pagejs path, (ctx) =>
+    pagejs path, (ctx) =>
       @path ctx.path
 
       if typeof options == 'function'
