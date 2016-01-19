@@ -1,14 +1,14 @@
 Q = require 'q'
 
-module.exports = ->
-  address = window.location.protocol + '/' + window.location.host + '/api'
+address = window.location.protocol + '//' + window.location.host + '/api'
 
-  ajax = (method, url, data, relative = true) ->
-    Q $.ajax
-      url: if relative then address + url else url
-      data: data
-      method: method
+ajax = (method, url, data, relative = true) ->
+  Q $.ajax
+    url: if relative then address + url else url
+    data: data
+    method: method
 
+module.exports =
   get: ajax.bind undefined, 'GET'
   put: ajax.bind undefined, 'PUT'
   post: ajax.bind undefined, 'POST'
