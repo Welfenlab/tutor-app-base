@@ -1,4 +1,3 @@
-ko = require 'knockout'
 i18n = require 'i18next-ko'
 pagejs = require 'page'
 _ = require 'lodash'
@@ -12,7 +11,7 @@ config:
 }
 ###
 
-module.exports = ($) ->
+module.exports = ($, ko) ->
   class TutorAppBase
     constructor: (@_config) ->
       #transform translation config into the format that i18next-ko needs

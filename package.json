@@ -18,7 +18,6 @@
   "homepage": "https://github.com/Welfenlab/tutor-app-base#readme",
   "dependencies": {
     "i18next-ko": "^1.3.2",
-    "knockout": "^3.4.0",
     "lodash": "^4.0.0",
     "page": "~1.6.4",
     "q": "^1.4.1"
