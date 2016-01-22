@@ -48,6 +48,9 @@ module.exports = ($) ->
         @availableLanguages = _.keys @_config.translations
         i18n.setLanguage('en')
 
+    boot: ->
+      ko.applyBindings app
+
     goto: (path, force) ->
       mainElement = document.querySelector(@_config.mainElement)?.firstChild
       if mainElement
@@ -63,16 +66,17 @@ module.exports = ($) ->
         pagejs path
 
 
-    register: (path, options) ->
-      pagejs path, (ctx) =>
-        @path ctx.path
+    route: (path, options) ->
+      if path? and options?
+        pagejs path, (ctx) =>
+          @path ctx.path
 
-        if typeof options == 'function'
-          options(ctx)
-        else
-          @pageParams ctx.params
-          @pageRequiresLogin options.loginRequired isnt false
-          @page options.component
+          if typeof options == 'function'
+            options(ctx)
+          else
+            @pageParams ctx.params
+            @pageRequiresLogin options.loginRequired isnt false
+            @page options.component
 
     isActive: (path) -> @path().indexOf(path) == 0
 
