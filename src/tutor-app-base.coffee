@@ -42,6 +42,7 @@ module.exports = ($, ko) ->
         #    app.goto e.originalEvent.state.path, e.originalEvent.state
 
         pagejs(hashbang: false, click: false, popstate: true) #handlers don't work, we do it on our own below
+        @path pagejs.current
         @language = ko.observable 'en'
         @language.subscribe (v) -> i18n.setLanguage(v)
         @availableLanguages = _.keys @_config.translations

@@ -56,6 +56,7 @@
               click: false,
               popstate: true
             });
+            _this.path(pagejs.current);
             _this.language = ko.observable('en');
             _this.language.subscribe(function(v) {
               return i18n.setLanguage(v);
