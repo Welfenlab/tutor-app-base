@@ -18,6 +18,7 @@
   };
 
   module.exports = {
+    address: address,
     get: ajax.bind(void 0, 'GET'),
     put: ajax.bind(void 0, 'PUT'),
     post: ajax.bind(void 0, 'POST'),

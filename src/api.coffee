@@ -9,6 +9,7 @@ ajax = (method, url, data, relative = true) ->
     method: method
 
 module.exports =
+  address: address
   get: ajax.bind undefined, 'GET'
   put: ajax.bind undefined, 'PUT'
   post: ajax.bind undefined, 'POST'
