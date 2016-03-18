@@ -12,7 +12,8 @@
     }
     return Q($.ajax({
       url: relative ? address + url : url,
-      data: data,
+      contentType: 'application/json',
+      data: JSON.stringify(data),
       method: method
     }));
   };

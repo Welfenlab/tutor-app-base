@@ -5,7 +5,8 @@ address = window.location.protocol + '//' + window.location.host + '/api'
 ajax = (method, url, data, relative = true) ->
   Q $.ajax
     url: if relative then address + url else url
-    data: data
+    contentType: 'application/json'
+    data: JSON.stringify(data)
     method: method
 
 module.exports =
